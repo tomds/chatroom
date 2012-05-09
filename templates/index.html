@@ -39,12 +39,20 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script>
+      var scrollMessageBox = function () {
+        var $messages = $('#messages');
+        var height = $messages[0].scrollHeight;
+        $messages.scrollTop(height);
+      };
+    
       $(document).ready(function () {
         var socket = io.connect();
         socket.on('message', function (data) {
           var $div = $('<div></div>');
           $div.text(data.text);
           $('#messages').append($div);
+          
+          scrollMessageBox();
         });
       
         $('#enter-message').submit(function (e) {

@@ -1,3 +1,4 @@
 node_modules
 *.wpr
 *.wpu
+npm-debug.log

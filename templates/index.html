@@ -12,23 +12,29 @@
         clear: both;
       }
       
-      #messages {
+      .notice {
+        font-weight: bold;
+      }
+      
+      #messages, #users {
         border: 1px solid black;
         height: 65%;
-        width: 80%;
         overflow: auto;
         margin-bottom: 10px;
         word-wrap: break-word;
         font: 1.0em Courier New, monospace;
         float: left;
+        padding: 5px;
+      }
+      
+      #messages {
+        width: 80%;
       }
       
       #users {
         width: 18%;
-        height: 65%;
-        float: left;
-        border: 1px solid black;
         border-left-style: none;
+        font-weight: bold;
       }
       
       #field-message {
@@ -39,20 +45,53 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script>
-      var scrollMessageBox = function () {
-        var $messages = $('#messages');
-        var height = $messages[0].scrollHeight;
-        $messages.scrollTop(height);
+      var scrollBox = function ($elem) {
+        var height = $elem[0].scrollHeight;
+        $elem.scrollTop(height);
       };
+      
+      var addUser = function (username) {
+        $userDiv = $('<div></div>');
+        $userDiv.text(username);
+        $userDiv.attr('data-username', username);
+        $('#users').append($userDiv);
+      }
     
       $(document).ready(function () {
         var socket = io.connect();
+        
+        socket.on('userlist', function (data) {
+          $.each(data.list, function () {
+            addUser(this);
+          });
+        });
+        
         socket.on('message', function (data) {
           var $div = $('<div></div>');
           $div.text(data.text);
           $('#messages').append($div);
           
-          scrollMessageBox();
+          scrollBox($('#messages'));
+        });
+        
+        socket.on('joined', function (data) {
+          var $messageDiv = $('<div class="notice notice-joined"></div>');
+          $messageDiv.text('* User ' + data.username + ' joined');
+          $('#messages').append($messageDiv);
+          scrollBox($('#messages'));
+          
+          if (!data.self) {
+            addUser(data.username);
+          }
+        });
+        
+        socket.on('left', function (data) {
+          var $messageDiv = $('<div class="notice notice-left"></div>');
+          $messageDiv.text('* User ' + data.username + ' left');
+          $('#messages').append($messageDiv);
+          scrollBox($('#messages'));
+
+          $('#users div[data-username=' + data.username + ']').remove();
         });
       
         $('#enter-message').submit(function (e) {

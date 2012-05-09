@@ -1,6 +1,20 @@
 <html>
 
   <head>
+    <title>Chatroom</title>
+    <style>
+      body {
+        font: 0.9em arial,helvetica,clean,sans-serif;
+      }
+      
+      #messages {
+        border: 1px solid black;
+        height: 65%;
+        width: 80%;
+        overflow: auto;
+        margin-bottom: 10px;
+      }
+    </style>
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script>
@@ -23,9 +37,12 @@
   </head>
   
   <body>
+    <h1>Chatroom</h2>
+    <p>Simple chatroom app built with node.js and socket.io</p>
     <div id="messages"></div>
     <form id="enter-message">
-      <input name="message" />
+      <label for="field-message">Your message:</label>
+      <input name="message" id="field-message" />
       <input type="submit" value="Enter" />
     </form>
   </body>

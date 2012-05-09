@@ -5,6 +5,7 @@
     <style>
       body {
         font: 0.9em arial,helvetica,clean,sans-serif;
+        padding: 0 10px;
       }
       
       #messages {
@@ -13,6 +14,13 @@
         width: 80%;
         overflow: auto;
         margin-bottom: 10px;
+        word-wrap: break-word;
+        font: 1.0em Courier New, monospace;
+      }
+      
+      #field-message {
+        width: 80%;
+        font: 1.0em Courier New, monospace;
       }
     </style>
     <script src="/socket.io/socket.io.js"></script>
@@ -41,8 +49,7 @@
     <p>Simple chatroom app built with node.js and socket.io</p>
     <div id="messages"></div>
     <form id="enter-message">
-      <label for="field-message">Your message:</label>
-      <input name="message" id="field-message" />
+      <input name="message" id="field-message" placeholder="Your message"/>
       <input type="submit" value="Enter" />
     </form>
   </body>

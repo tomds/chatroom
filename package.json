@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "node": "0.6.x",
-    "npm":  "1.0.x"
+    "npm":  "1.0.x",
     "express": "2.5.9",
     "socket.io": "0.9.6"
   }

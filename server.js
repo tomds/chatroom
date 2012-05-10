@@ -9,7 +9,7 @@ app.get('/', function (req, res) {
   res.sendfile(__dirname + '/templates/index.html');
 });
 
-var maxUsers = 199;
+var maxUsers = 3;
 var usernameMaxLength = 30;
 var users = {};
 var currentUsernames = [];

@@ -80,7 +80,12 @@
       }
     
       $(document).ready(function () {
+        var lastLoad = new Date().getTime();
         var socket = io.connect();
+        
+        socket.on('reload', function (data) {
+          window.location.reload(true);
+        });
         
         socket.on('server-full', function (data) {
           $('#username-submit-result').text('');
@@ -90,7 +95,7 @@
         
         socket.on('welcome', function (data) {
           $('#username-submit-result').text('');
-          socket.emit('join', {username: $.cookie('chatroom-username')});
+          socket.emit('join', {username: $.cookie('chatroom-username'), lastLoad: lastLoad});
         });
         
         socket.on('userlist', function (data) {

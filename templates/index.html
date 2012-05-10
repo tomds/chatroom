@@ -36,9 +36,14 @@
       }
       
       #users {
-        width: 18%;
+        width: 10%;
         border-left-style: none;
         font-weight: bold;
+      }
+      
+      #users ul {
+        margin: 0;
+        padding: 0 17px;
       }
       
       #field-message {
@@ -67,10 +72,10 @@
       };
       
       var addUser = function (username) {
-        $userDiv = $('<div></div>');
-        $userDiv.text(username);
-        $userDiv.attr('data-username', username);
-        $('#users').append($userDiv);
+        $userLi = $('<li></li>');
+        $userLi.text(username);
+        $userLi.attr('data-username', username);
+        $('#users ul').append($userLi);
       }
     
       $(document).ready(function () {
@@ -115,7 +120,7 @@
           $('#messages').append($messageDiv);
           scrollBox($('#messages'));
 
-          $('#users div[data-username=' + data.username + ']').remove();
+          $('#users li[data-username=' + data.username + ']').remove();
         });
         
         socket.on('changed-username', function (data) {
@@ -124,9 +129,9 @@
           $('#messages').append($messageDiv);
           scrollBox($('#messages'));
           
-          var $userDiv = $('#users div[data-username=' + data.oldName + ']');
-          $userDiv.attr('data-username', data.newName);
-          $userDiv.text(data.newName);
+          var $userLi = $('#users li[data-username=' + data.oldName + ']');
+          $userLi.attr('data-username', data.newName);
+          $userLi.text(data.newName);
         });
         
         socket.on('change-username-submit', function (data) {
@@ -168,7 +173,7 @@
     </form>
     
     <div id="messages"></div>
-    <div id="users"></div><br class="clearer" />
+    <div id="users"><ul></ul></div><br class="clearer" />
     <form id="enter-message">
       <input name="message" id="field-message" placeholder="Your message"/>
       <input type="submit" value="Enter" />

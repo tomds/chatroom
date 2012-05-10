@@ -8,6 +8,10 @@
         padding: 0 10px;
       }
       
+      a {
+        text-decoration: none;
+      }
+      
       .clearer {
         clear: both;
       }
@@ -22,7 +26,7 @@
       
       #messages, #users {
         border: 1px solid black;
-        height: 65%;
+        height: 55%;
         overflow: auto;
         margin-bottom: 10px;
         word-wrap: break-word;
@@ -61,6 +65,10 @@
       
       #username-submit-result.fail {
         color: red;
+      }
+      
+      #author-info {
+        margin-bottom: 20px;
       }
     </style>
     <script src="/socket.io/socket.io.js"></script>
@@ -182,7 +190,8 @@
   
   <body>
     <h1>Chatroom</h2>
-    <p>Simple chatroom app built with node.js and socket.io</p>
+    <p>Simple chatroom app built with <a href="http://nodejs.org/" target="_blank">node.js</a> and <a href="http://socket.io/" target="_blank">socket.io</a></p>
+    <p id="author-info">By Tom de Simone &middot; <a href="https://twitter.com/#!/Xeelix" target="_blank">Twitter</a> &middot; <a href="https://github.com/tomds" target="_blank">Github</a> &middot; <a href="http://meatfinish.co.uk/" target="_blank">Blog</a></p>
     
     <form id="change-username">
       <label for="field-username">Your username: </label>

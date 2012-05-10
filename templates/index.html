@@ -82,6 +82,7 @@
         var socket = io.connect();
         
         socket.on('userlist', function (data) {
+          $('#users ul').children().remove();
           $.each(data.list, function () {
             addUser(this);
           });

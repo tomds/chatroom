@@ -52,8 +52,9 @@ io.sockets.on('connection', function (socket) {
       socket.emit('userlist', {list: currentUsernames});
       
       socket.on('message', function (data) {
-        socket.broadcast.emit('message', {text: data.text});
-        socket.emit('message', {text: data.text});
+        var username = users[socket.id];
+        socket.broadcast.emit('message', {text: data.text, username: username});
+        socket.emit('message', {text: data.text, username: username});
       });
       
       socket.on('disconnect', function (data) {

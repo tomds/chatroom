@@ -13,6 +13,10 @@
       }
       
       .notice {
+        font-style: italic;
+      }
+      
+      .username {
         font-weight: bold;
       }
       
@@ -68,7 +72,13 @@
         
         socket.on('message', function (data) {
           var $div = $('<div></div>');
-          $div.text(data.text);
+          var $userSpan = $('<span class="username"></span>');
+          $userSpan.text('<' + data.username + '>');
+          var $msgSpan = $('<span class="message"></span>');
+          $msgSpan.text(data.text);
+          $div.append($userSpan);
+          $div.append(' ');
+          $div.append($msgSpan);
           $('#messages').append($div);
           
           scrollBox($('#messages'));

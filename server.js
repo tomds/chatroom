@@ -10,6 +10,7 @@ app.get('/', function (req, res) {
 });
 
 var maxUsers = 199;
+var usernameMaxLength = 30;
 var users = {};
 var currentUsernames = [];
 
@@ -55,6 +56,29 @@ io.sockets.on('connection', function (socket) {
         var username = users[socket.id];
         socket.broadcast.emit('message', {text: data.text, username: username});
         socket.emit('message', {text: data.text, username: username});
+      });
+      
+      socket.on('change-username', function (data) {
+        var username =  data.username.replace(/(^\s*)|(\s*$)/g, '');
+        if (username.length > usernameMaxLength) {
+          socket.emit('change-username-submit', {success: false, message: 'Username must be less than ' + usernameMaxLength + ' characters.'});
+        } else if (!username) {
+          socket.emit('change-username-submit', {success: false, message: 'Username cannot be blank.'});
+        } else {
+          var index = currentUsernames.indexOf(username);
+          if (index == -1) {
+            var oldUsername = users[socket.id];
+            users[socket.id] = username;
+            currentUsernames.splice(index, 1);
+            currentUsernames.push(username);
+            
+            socket.broadcast.emit('changed-username', {oldName: oldUsername, newName: username});
+            socket.emit('changed-username', {oldName: oldUsername, newName: username});
+            socket.emit('change-username-submit', {success: true, message: 'Username successfully changed.'});
+          } else {
+            socket.emit('change-username-submit', {success: false, message: 'Username already in use; please try another.'});
+          }
+        }
       });
       
       socket.on('disconnect', function (data) {

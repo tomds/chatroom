@@ -18,10 +18,8 @@ var generateGuestUsername = function () {
   var randomNumber = Math.floor(Math.random()*maxUsers);
   var username = 'guest' + randomNumber;
   if (currentUsernames.indexOf(username) == -1) {
-    console.log('found username ' + username);
     return username;
   } else {
-    console.log('user ' + username + ' already exists, trying again');
     return generateGuestUsername();
   }
 };
@@ -65,9 +63,9 @@ io.sockets.on('connection', function (socket) {
         } else if (!username) {
           socket.emit('change-username-submit', {success: false, message: 'Username cannot be blank.'});
         } else {
-          var index = currentUsernames.indexOf(username);
-          if (index == -1) {
+          if (currentUsernames.indexOf(username) == -1) {
             var oldUsername = users[socket.id];
+            var index = currentUsernames.indexOf(oldUsername);
             users[socket.id] = username;
             currentUsernames.splice(index, 1);
             currentUsernames.push(username);

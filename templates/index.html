@@ -65,6 +65,7 @@
     </style>
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="/static/js/jquery.cookie.js"></script>
     <script>
       var scrollBox = function ($elem) {
         var height = $elem[0].scrollHeight;
@@ -89,6 +90,7 @@
         
         socket.on('welcome', function (data) {
           $('#username-submit-result').text('');
+          socket.emit('join', {username: $.cookie('chatroom-username')});
         });
         
         socket.on('userlist', function (data) {
@@ -120,6 +122,7 @@
           
           if (data.self) {
             $('#field-username').val(data.username);
+            $.cookie('chatroom-username', data.username, {expires: 365, path: '/'});
           } else {
             addUser(data.id, data.username);
           }
@@ -148,6 +151,7 @@
           $('#username-submit-result').text('');
           if (data.success) {
             $('#username-submit-result').removeClass('fail').addClass('success');
+            $.cookie('chatroom-username', data.username, {expires: 365, path: '/'});
           } else {
             $('#username-submit-result').removeClass('success').addClass('fail');
           }

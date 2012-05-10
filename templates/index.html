@@ -71,10 +71,10 @@
         $elem.scrollTop(height);
       };
       
-      var addUser = function (username) {
+      var addUser = function (id, username) {
         $userLi = $('<li></li>');
         $userLi.text(username);
-        $userLi.attr('data-username', username);
+        $userLi.attr('data-user-id', id);
         $('#users ul').append($userLi);
       }
     
@@ -93,9 +93,9 @@
         
         socket.on('userlist', function (data) {
           $('#users ul').children().remove();
-          $.each(data.list, function () {
-            addUser(this);
-          });
+          for (i in data.users) {
+            addUser(i, data.users[i]);
+          }
         });
         
         socket.on('message', function (data) {
@@ -121,7 +121,7 @@
           if (data.self) {
             $('#field-username').val(data.username);
           } else {
-            addUser(data.username);
+            addUser(data.id, data.username);
           }
         });
         
@@ -131,7 +131,7 @@
           $('#messages').append($messageDiv);
           scrollBox($('#messages'));
 
-          $('#users li[data-username=' + data.username + ']').remove();
+          $('#users li[data-user-id=' + data.id + ']').remove();
         });
         
         socket.on('changed-username', function (data) {
@@ -140,8 +140,7 @@
           $('#messages').append($messageDiv);
           scrollBox($('#messages'));
           
-          var $userLi = $('#users li[data-username=' + data.oldName + ']');
-          $userLi.attr('data-username', data.newName);
+          var $userLi = $('#users li[data-user-id=' + data.id + ']');
           $userLi.text(data.newName);
         });
         

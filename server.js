@@ -47,9 +47,9 @@ io.sockets.on('connection', function (socket) {
     var username = createUser(socket.id);
     if (username) {
       socket.emit('welcome');
-      socket.broadcast.emit('joined', {username: username});
-      socket.emit('joined', {username: username, self: true});
-      socket.emit('userlist', {list: currentUsernames});
+      socket.broadcast.emit('joined', {username: username, id: socket.id});
+      socket.emit('joined', {username: username, self: true, id: socket.id});
+      socket.emit('userlist', {users: users});
       
       socket.on('message', function (data) {
         var username = users[socket.id];
@@ -71,8 +71,8 @@ io.sockets.on('connection', function (socket) {
             currentUsernames.splice(index, 1);
             currentUsernames.push(username);
             
-            socket.broadcast.emit('changed-username', {oldName: oldUsername, newName: username});
-            socket.emit('changed-username', {oldName: oldUsername, newName: username});
+            socket.broadcast.emit('changed-username', {id: socket.id, oldName: oldUsername, newName: username});
+            socket.emit('changed-username', {id: socket.id, oldName: oldUsername, newName: username});
             socket.emit('change-username-submit', {success: true, message: 'Username successfully changed.'});
           } else {
             socket.emit('change-username-submit', {success: false, message: 'Username already in use; please try another.'});
@@ -82,7 +82,7 @@ io.sockets.on('connection', function (socket) {
       
       socket.on('disconnect', function (data) {
         var username = disconnectUser(socket.id);
-        socket.broadcast.emit('left', {username: username});
+        socket.broadcast.emit('left', {username: username, id: socket.id});
       });
     }
   } else {

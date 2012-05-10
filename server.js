@@ -9,7 +9,7 @@ app.get('/', function (req, res) {
   res.sendfile(__dirname + '/templates/index.html');
 });
 
-var maxUsers = 3;
+var maxUsers = 199;
 var usernameMaxLength = 30;
 var users = {};
 var currentUsernames = [];
@@ -46,6 +46,7 @@ io.sockets.on('connection', function (socket) {
   if (currentUsernames.length < maxUsers) {
     var username = createUser(socket.id);
     if (username) {
+      socket.emit('welcome');
       socket.broadcast.emit('joined', {username: username});
       socket.emit('joined', {username: username, self: true});
       socket.emit('userlist', {list: currentUsernames});
@@ -84,5 +85,7 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.emit('left', {username: username});
       });
     }
+  } else {
+    socket.emit('server-full');
   }
 });

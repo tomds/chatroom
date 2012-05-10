@@ -81,6 +81,16 @@
       $(document).ready(function () {
         var socket = io.connect();
         
+        socket.on('server-full', function (data) {
+          $('#username-submit-result').text('');
+          $('#username-submit-result').removeClass('success').addClass('fail');
+          $('#username-submit-result').text('Server full; please try again later');
+        });
+        
+        socket.on('welcome', function (data) {
+          $('#username-submit-result').text('');
+        });
+        
         socket.on('userlist', function (data) {
           $('#users ul').children().remove();
           $.each(data.list, function () {

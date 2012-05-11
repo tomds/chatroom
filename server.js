@@ -1,4 +1,5 @@
-var app = require('express').createServer()
+var express = require('express')
+  , app = express.createServer()
   , io = require('socket.io').listen(app);
   
 var port = process.env.PORT || 8000;
@@ -9,9 +10,7 @@ app.get('/', function (req, res) {
   res.sendfile(__dirname + '/templates/index.html');
 });
 
-app.get('/static/js/jquery.cookie.js', function (req, res) {
-  res.sendfile(__dirname + '/static/js/jquery.cookie.js');
-});
+app.use(express.static(__dirname + '/public'));
 
 var lastRestart = new Date().getTime();
 

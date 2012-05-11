@@ -1,67 +1,67 @@
 body {
-  font: 0.9em arial,helvetica,clean,sans-serif;
-  padding: 0 10px;
+    font: 0.9em arial,helvetica,clean,sans-serif;
+    padding: 0 10px;
 }
 
 a {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 .clearer {
-  clear: both;
+    clear: both;
 }
 
 .notice {
-  font-style: italic;
+    font-style: italic;
 }
 
 .username {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 #messages, #users {
-  border: 1px solid black;
-  height: 55%;
-  overflow: auto;
-  margin-bottom: 10px;
-  word-wrap: break-word;
-  font: 1.0em Courier New, monospace;
-  float: left;
-  padding: 5px;
+    border: 1px solid black;
+    height: 55%;
+    overflow: auto;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    font: 1.0em Courier New, monospace;
+    float: left;
+    padding: 5px;
 }
 
 #messages {
-  width: 80%;
+    width: 80%;
 }
 
 #users {
-  width: 10%;
-  border-left-style: none;
-  font-weight: bold;
+    width: 10%;
+    border-left-style: none;
+    font-weight: bold;
 }
 
 #users ul {
-  margin: 0;
-  padding: 0 17px;
+    margin: 0;
+    padding: 0 17px;
 }
 
 #field-message {
-  width: 80%;
-  font: 1.0em Courier New, monospace;
+    width: 80%;
+    font: 1.0em Courier New, monospace;
 }
 
 #field-username {
-  font: 1.0em Courier New, monospace;
+    font: 1.0em Courier New, monospace;
 }
 
 #username-submit-result.success {
-  color: green;
+    color: green;
 }
 
 #username-submit-result.fail {
-  color: red;
+    color: red;
 }
 
 #author-info {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
